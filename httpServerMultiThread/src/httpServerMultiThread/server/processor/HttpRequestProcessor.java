@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -21,10 +22,9 @@ public class HttpRequestProcessor implements Runnable {
     private BufferedOutputStream outputDataStream;
     private List<String> reqInputTokenLst;
     private String reqFilePath;
-    private String method;
     private String requestInput;
     private File reqFile;
-    private boolean isError = false;
+    private FileInputStream fileInputStream;
 
     private final String WWW_ROOT_DIRECTORY = "./www";
     private final String INDEX_FILE_PATH = "/index.html";
@@ -37,49 +37,25 @@ public class HttpRequestProcessor implements Runnable {
     @Override
     public void run() {
         try {
-            // we read characters from the client via input stream on the socket
             inputReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            // we get character output stream to client (for headers)
+
             headerWriter = new PrintWriter(clientSocket.getOutputStream());
-            // get binary output stream to client (for requested data)
+
             outputDataStream = new BufferedOutputStream(clientSocket.getOutputStream());
 
-            // get first line of the request from the client
             requestInput = inputReader.readLine();
 
             reqInputTokenLst = Arrays.asList(requestInput.split("\\s"));
 
-            method = reqInputTokenLst.get(0);
             reqFilePath = reqInputTokenLst.get(1).equals("/") ? WWW_ROOT_DIRECTORY + INDEX_FILE_PATH
                     : WWW_ROOT_DIRECTORY + reqInputTokenLst.get(1);
 
             reqFile = new File(reqFilePath);
-            isError = !reqFile.exists();
 
-            if (isError) {
-                reqFilePath = WWW_ROOT_DIRECTORY + ERROR_FILE_PATH;
-                reqFile = new File(reqFilePath);
-            }
+            writeOutput(!reqFile.exists());
 
-            ContentProperties contentProps = new ContentProperties(reqInputTokenLst.get(2), reqFile, isError);
-            contentProps.updateContentProperties();
-
-            headerWriter.print(contentProps.getContentPropertiesString());
-            headerWriter.println();
-            headerWriter.flush();
-
-            // ===================================================
-            byte[] fd = new byte[(int) reqFile.length()];
-            FileInputStream fin = new FileInputStream(reqFile);
-            fin.read(fd);
-            fin.close();
-
-            // ===================================================
-
-            outputDataStream.write(fd, 0, (int) reqFile.length());
-            outputDataStream.flush();
-
-        } catch (Exception e) {
+        } catch (IOException e) {
+            System.out.println("Server Error: Error in I/O processing");
         } finally {
             try {
                 inputReader.close();
@@ -88,10 +64,45 @@ public class HttpRequestProcessor implements Runnable {
                 clientSocket.close();
 
             } catch (IOException e) {
-                System.out.println("Server error: " + e.getMessage());
+                System.out.println("Server error: Error in I/O processing");
             }
-
         }
+
+    }
+
+    public void writeOutput(boolean isError) throws IOException {
+        if (isError) {
+            reqFilePath = WWW_ROOT_DIRECTORY + ERROR_FILE_PATH;
+            reqFile = new File(reqFilePath);
+        }
+
+        ContentProperties contentProps = new ContentProperties(reqInputTokenLst.get(2), reqFile, isError);
+        contentProps.updateContentProperties();
+
+        headerWriter.print(contentProps.getContentPropertiesString());
+        headerWriter.println();
+        headerWriter.flush();
+
+        outputDataStream.write(readFileInBytes(reqFile), 0, (int) reqFile.length());
+        outputDataStream.flush();
+    }
+
+    public byte[] readFileInBytes(File file) throws IOException {
+        byte[] fd = new byte[(int) file.length()];
+        fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            throw e;
+        } finally {
+            try {
+                fileInputStream.read(fd);
+                fileInputStream.close();
+            } catch (IOException e) {
+                throw e;
+            }
+        }
+        return fd;
 
     }
 }
