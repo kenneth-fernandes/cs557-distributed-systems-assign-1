@@ -15,14 +15,6 @@
         <mkdir dir="${classes}" />
         <mkdir dir="${outputFile}" />
     </target>
-    <target name="client-jar">
-        <mkdir dir="${BUILD}/jar" />
-        <jar destfile="${BUILD}/jar/client.jar" basedir="${BUILD}/classes">
-            <manifest>
-                <attribute name="Main-Class" value="client.driver.Driver" />
-            </manifest>
-        </jar>
-    </target>
     <target name="server-jar">
         <mkdir dir="${BUILD}/jar" />
         <jar destfile="${BUILD}/jar/server.jar" basedir="${BUILD}/classes">
@@ -36,11 +28,6 @@
     <!--  for just java files use *.java  -->
     <target name="httpServerMultiThread" depends="prepare">
         <javac includeantruntime="false" srcdir="${src}" includes="**" excludes="**/package.html" destdir="${classes}" classpath="${classes}" debug="on" optimize="on" deprecation="off" />
-    </target>
-    <target name="run-client" depends="client-jar">
-        <java jar="${BUILD}/jar/client.jar" fork="true">
-            <!-- <arg value="${arg0}" /> -->
-        </java>
     </target>
     <target name="run-server" depends="server-jar">
         <java jar="${BUILD}/jar/server.jar" fork="true">
