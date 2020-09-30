@@ -8,9 +8,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import server.content.ContentProperties;
 
@@ -25,18 +29,23 @@ public class HttpRequestProcessor implements Runnable {
     private String requestInput;
     private File reqFile;
     private FileInputStream fileInputStream;
+    private Map<String, Integer> fileAccesCountMap;
+   
 
     private final String WWW_ROOT_DIRECTORY = "./www";
     private final String INDEX_FILE_PATH = "/index.html";
     private final String ERROR_FILE_PATH = "/error.html";
 
-    public HttpRequestProcessor(Socket clientSocket) {
+    public HttpRequestProcessor(Socket clientSocket, Map<String, Integer> fileAccesCountMap2) {
         this.clientSocket = clientSocket;
+        this.fileAccesCountMap = fileAccesCountMap2;
     }
 
     @Override
     public void run() {
         try {
+            
+
             inputReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             headerWriter = new PrintWriter(clientSocket.getOutputStream());
@@ -71,6 +80,7 @@ public class HttpRequestProcessor implements Runnable {
     }
 
     public void writeOutput(boolean isError) throws IOException {
+
         if (isError) {
             reqFilePath = WWW_ROOT_DIRECTORY + ERROR_FILE_PATH;
             reqFile = new File(reqFilePath);
@@ -85,6 +95,9 @@ public class HttpRequestProcessor implements Runnable {
 
         outputDataStream.write(readFileInBytes(reqFile), 0, (int) reqFile.length());
         outputDataStream.flush();
+
+        printClientRequestDetails(isError);
+
     }
 
     public byte[] readFileInBytes(File file) throws IOException {
@@ -103,6 +116,27 @@ public class HttpRequestProcessor implements Runnable {
             }
         }
         return fd;
+
+    }
+
+    public void printClientRequestDetails(boolean isError) {
+
+        if (!isError) {
+            String path = reqInputTokenLst.get(1).equals("/") ? INDEX_FILE_PATH : reqInputTokenLst.get(1);
+            if (fileAccesCountMap.get(path) == null) {
+
+                fileAccesCountMap.put(path, 1);
+
+            } else {
+
+                fileAccesCountMap.put(path, fileAccesCountMap.get(path) + 1);
+
+            }
+
+            System.out.println(path + "|" + clientSocket.getLocalAddress().getHostAddress() + "|"
+                    + clientSocket.getPort() + "|" + fileAccesCountMap.get(path));
+
+        }
 
     }
 }
