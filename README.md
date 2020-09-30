@@ -95,7 +95,7 @@ HTTP request sent, awaiting response... 404 Not Found
 
 ## Description:
 - This application is a simple multi-threaded HTTP server that only accepts HTTP GET requests and returns the desired content to the client.
-- The program is executed on remote.cs.binghamton.edu
+- The program is executed on remote.cs.binghamton.edu.
 
 ---
 
