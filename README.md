@@ -54,7 +54,36 @@ ant -buildfile httpServerMultiThread/src/build.xml run-server -Darg0=5000
 
 ## Output of server console:
 
+#### The program is executed on remote.cs.binghamton.edu server.
+
 ```commandline
+kferna11@remote06:~$ wget 128.226.114.195:8080/
+--2020-09-30 16:53:42--  http://128.226.114.195:8080/
+Connecting to 128.226.114.195:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 178 [text/html]
+Saving to: ‘index.html’
+
+index.html                                        100%[=============================================================================================================>]     178  --.-KB/s    in 0s
+
+2020-09-30 16:53:42 (12.2 MB/s) - ‘index.html’ saved [178/178]
+
+kferna11@remote06:~$ wget 128.226.114.195:8080/iron-man.png
+--2020-09-30 16:54:02--  http://128.226.114.195:8080/iron-man.png
+Connecting to 128.226.114.195:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 105060 (103K) [image/png]
+Saving to: ‘iron-man.png’
+
+iron-man.png                                      100%[=============================================================================================================>] 102.60K  --.-KB/s    in 0.001s
+
+2020-09-30 16:54:02 (89.0 MB/s) - ‘iron-man.png’ saved [105060/105060]
+
+kferna11@remote06:~$ wget 128.226.114.195:8080/iron-man1.png
+--2020-09-30 17:02:26--  http://128.226.114.195:8080/iron-man1.png
+Connecting to 128.226.114.195:8080... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2020-09-30 17:02:26 ERROR 404: Not Found.
 
 ```
 ---
