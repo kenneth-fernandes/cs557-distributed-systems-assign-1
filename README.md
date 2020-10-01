@@ -3,6 +3,37 @@
 ## Name: Kenneth Peter Fernandes
 
 ---
+## Description:
+- This application is a simple multi-threaded HTTP server that only accepts HTTP GET requests and returns the desired content to the client.
+- The program is executed on remote.cs.binghamton.edu.
+- The code for executing the program lies under the folder path "cs457-557-fall2020-pa1-kenneth-fernandes/httpServerMultiThread/src"
+- The folder for storing the html, image and other resource files lies under the folder path "cs457-557-fall2020-pa1-kenneth-fernandes/httpServerMultiThread/www/".
+- The application uses Ant for building and executing the program.
+
+---
+
+## References:
+1. Create a simple HTTP Web Server in Java | Sylvain Saurel:
+https://medium.com/@ssaurel/create-a-simple-http-web-server-in-java-3fc12b29d5fd
+
+2. How to create HTTP Server in Java - ServerSocket Example:
+https://javarevisited.blogspot.com/2015/06/how-to-create-http-server-in-java-serversocket-example.html
+
+3. Class Files | java.nio.file.Files - probeContentType() | Oracle docs
+https://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html#probeContentType%28java.nio.file.Path%29
+
+4. Get the Mime Type from a File:
+https://www.rgagnon.com/javadetails/java-0487.html
+
+5. Getting Date in HTTP format in Java:
+https://stackoverflow.com/questions/7707555/getting-date-in-http-format-in-java
+
+---
+
+## Instruction to add files to the server:
+- Navigate to the folder cs457-557-fall2020-pa1-kenneth-fernandes/httpServerMultiThread/www/.
+- The folder "www" is used to add resource files.
+---
 
 Following are the commands and the instructions to run ANT on your project.
 
@@ -41,81 +72,154 @@ Description: Compiles your code and generates .class files inside the BUILD fold
 
 ## Instruction to run:
 
-#### Use the below command to run the program.
+#### Use the below command to run the program. Please add the port number.
 
 ```commandline
 - Navigate to the repository folder:
 cd cs457-557-fall2020-pa1-kenneth-fernandes
 
 - Then run the command:
-ant -buildfile httpServerMultiThread/src/build.xml run-server -Darg0=5000
+ant -buildfile httpServerMultiThread/src/build.xml run-server -DportNumber=8080
 ```
 ---
 
 ## Output of server console:
 
-#### The program is executed on remote.cs.binghamton.edu server.
+#### The application was executed on the remote.cs.binghamton.edu server.
 
 ```commandline
-kferna11@remote06:~$ wget 128.226.114.195:8080/
---2020-09-30 16:53:42--  http://128.226.114.195:8080/
-Connecting to 128.226.114.195:8080... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 178 [text/html]
-Saving to: ‘index.html’
 
-index.html                                        100%[=============================================================================================================>]     178  --.-KB/s    in 0s
+kferna11@remote06:~/Assignment/IDS/cs457-557-fall2020-pa1-kenneth-fernandes-master$ ant -buildfile httpServerMultiThread/src/build.xml run-server -DportNumber=8080
+Buildfile: /import/linux/home1/kferna11/Assignment/IDS/cs457-557-fall2020-pa1-kenneth-fernandes-master/httpServerMultiThread/src/build.xml
 
-2020-09-30 16:53:42 (12.2 MB/s) - ‘index.html’ saved [178/178]
+server-jar:
+    [mkdir] Created dir: /import/linux/home1/kferna11/Assignment/IDS/cs457-557-fall2020-pa1-kenneth-fernandes-master/httpServerMultiThread/src/BUILD/jar
+      [jar] Building jar: /import/linux/home1/kferna11/Assignment/IDS/cs457-557-fall2020-pa1-kenneth-fernandes-master/httpServerMultiThread/src/BUILD/jar/server.jar
 
-kferna11@remote06:~$ wget 128.226.114.195:8080/iron-man.png
---2020-09-30 16:54:02--  http://128.226.114.195:8080/iron-man.png
-Connecting to 128.226.114.195:8080... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 105060 (103K) [image/png]
-Saving to: ‘iron-man.png’
+run-server:
+     [java] HTTP Server started. URL: 128.226.114.206:8080/
+     [java]
+     [java] /index.html|128.226.114.201|45018|1
+     [java] /iron-man.png|128.226.114.202|48602|1
+     [java] /eye-img.jpeg|128.226.114.203|56620|1
+     [java] /iron-man.png|128.226.114.202|48960|2
+     [java] /index.html|128.226.114.202|48972|2
+     [java] /iron-man.png|128.226.114.203|56622|3
+     [java] /index.html|128.226.114.203|56624|3
+     [java] /index.html|128.226.114.201|45022|4
 
-iron-man.png                                      100%[=============================================================================================================>] 102.60K  --.-KB/s    in 0.001s
-
-2020-09-30 16:54:02 (89.0 MB/s) - ‘iron-man.png’ saved [105060/105060]
-
-kferna11@remote06:~$ wget 128.226.114.195:8080/iron-man1.png
---2020-09-30 17:02:26--  http://128.226.114.195:8080/iron-man1.png
-Connecting to 128.226.114.195:8080... connected.
-HTTP request sent, awaiting response... 404 Not Found
-2020-09-30 17:02:26 ERROR 404: Not Found.
 
 ```
 ---
 
-## Instruction to add files to the server:
-- Navigate to the folder cs457-557-fall2020-pa1-kenneth-fernandes/httpServerMultiThread/www/.
-- The folder "www" is used to add resource files.
+## Output of client console:
+
+#### The command wget was executed on the remote.cs.binghamton.edu server.
+
+```commandline
+1. remote01.cs.binghamton.edu server:
+
+kferna11@remote01:~$ wget 128.226.114.206:8080/
+--2020-09-30 21:42:17--  http://128.226.114.206:8080/
+Connecting to 128.226.114.206:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 178 [text/html]
+Saving to: ‘index.html.3’
+
+index.html.3                          100%[=========================================================================>]     178  --.-KB/s    in 0s
+
+2020-09-30 21:42:17 (25.5 MB/s) - ‘index.html.3’ saved [178/178]
+
+kferna11@remote01:~$ wget 128.226.114.206:8080/
+--2020-09-30 21:47:15--  http://128.226.114.206:8080/
+Connecting to 128.226.114.206:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 178 [text/html]
+Saving to: ‘index.html.6’
+
+index.html.6                          100%[=========================================================================>]     178  --.-KB/s    in 0s
+
+2020-09-30 21:47:15 (24.6 MB/s) - ‘index.html.6’ saved [178/178]
+
+2. remote02.cs.binghamton.edu server:
+
+kferna11@remote02:~$ wget 128.226.114.206:8080/iron-man.png
+--2020-09-30 21:44:08--  http://128.226.114.206:8080/iron-man.png
+Connecting to 128.226.114.206:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 105060 (103K) [image/png]
+Saving to: ‘iron-man.png’
+
+iron-man.png                          100%[=========================================================================>] 102.60K  --.-KB/s    in 0s
+
+2020-09-30 21:44:08 (325 MB/s) - ‘iron-man.png’ saved [105060/105060]
+
+kferna11@remote02:~$ wget 128.226.114.206:8080/iron-man.png
+--2020-09-30 21:45:43--  http://128.226.114.206:8080/iron-man.png
+Connecting to 128.226.114.206:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 105060 (103K) [image/png]
+Saving to: ‘iron-man.png.1’
+
+iron-man.png.1                        100%[=========================================================================>] 102.60K  --.-KB/s    in 0s
+
+2020-09-30 21:45:43 (449 MB/s) - ‘iron-man.png.1’ saved [105060/105060]
+
+kferna11@remote02:~$ wget 128.226.114.206:8080
+--2020-09-30 21:46:03--  http://128.226.114.206:8080/
+Connecting to 128.226.114.206:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 178 [text/html]
+Saving to: ‘index.html.4’
+
+index.html.4                          100%[=========================================================================>]     178  --.-KB/s    in 0s
+
+2020-09-30 21:46:03 (24.4 MB/s) - ‘index.html.4’ saved [178/178]
+
+3. remote03.cs.binghamton.edu server:
+
+kferna11@remote03:~$ wget 128.226.114.206:8080/eye-img.jpeg
+--2020-09-30 21:45:25--  http://128.226.114.206:8080/eye-img.jpeg
+Connecting to 128.226.114.206:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 80221 (78K) [image/jpeg]
+Saving to: ‘eye-img.jpeg’
+
+eye-img.jpeg                          100%[=========================================================================>]  78.34K  --.-KB/s    in 0s
+
+2020-09-30 21:45:25 (163 MB/s) - ‘eye-img.jpeg’ saved [80221/80221]
+
+kferna11@remote03:~$ wget 128.226.114.206:8080/iron-man.png
+--2020-09-30 21:46:25--  http://128.226.114.206:8080/iron-man.png
+Connecting to 128.226.114.206:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 105060 (103K) [image/png]
+Saving to: ‘iron-man.png.2’
+
+iron-man.png.2                        100%[=========================================================================>] 102.60K  --.-KB/s    in 0s
+
+2020-09-30 21:46:25 (209 MB/s) - ‘iron-man.png.2’ saved [105060/105060]
+
+kferna11@remote03:~$ wget 128.226.114.206:8080/
+--2020-09-30 21:46:58--  http://128.226.114.206:8080/
+Connecting to 128.226.114.206:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 178 [text/html]
+Saving to: ‘index.html.5’
+
+index.html.5                          100%[=========================================================================>]     178  --.-KB/s    in 0s
+
+2020-09-30 21:46:58 (23.1 MB/s) - ‘index.html.5’ saved [178/178]
+
+kferna11@remote03:~$ wget 128.226.114.206:8080/iron-man1.png
+--2020-09-30 21:50:48--  http://128.226.114.206:8080/iron-man1.png
+Connecting to 128.226.114.206:8080... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2020-09-30 21:50:48 ERROR 404: Not Found.
+
+```
 ---
 
-## Description:
-- This application is a simple multi-threaded HTTP server that only accepts HTTP GET requests and returns the desired content to the client.
-- The program is executed on remote.cs.binghamton.edu.
-
----
-
-## References:
-1. Create a simple HTTP Web Server in Java | Sylvain Saurel:
-https://medium.com/@ssaurel/create-a-simple-http-web-server-in-java-3fc12b29d5fd
-
-2. How to create HTTP Server in Java - ServerSocket Example:
-https://javarevisited.blogspot.com/2015/06/how-to-create-http-server-in-java-serversocket-example.html
-
-3. Class Files | java.nio.file.Files - probeContentType() | Oracle docs
-https://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html#probeContentType%28java.nio.file.Path%29
-
-4. Get the Mime Type from a File:
-https://www.rgagnon.com/javadetails/java-0487.html
-
-5. Getting Date in HTTP format in Java:
-https://stackoverflow.com/questions/7707555/getting-date-in-http-format-in-java
-
----
 
 ### Academic Honesty statement:
 
