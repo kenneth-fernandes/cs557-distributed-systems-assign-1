@@ -5,6 +5,10 @@
 ---
 ## Description:
 - This application is a simple multi-threaded HTTP server that only accepts HTTP GET requests and returns the desired content to the client.
+- With the help of Socket programming, the HTTP server application is build where the server listens to a port number.
+-  With the ip address and the port number of the server, the client can request any resource hosted by the server by establishing connection first and then accessing the resource.
+- The server application uses BufferedReader to read the incoming request from the client for a resource, PrintWriter is a character output stream to write the Response Header back to the client and BufferedOutputStream for sending binary output of the requested resource.
+- With each connection to the client, a Thread instance is created where we read the request from the client and write the response header and requested resource in the form of binary output data. 
 - The program is executed on remote.cs.binghamton.edu.
 - The code for executing the program lies under the folder path "cs457-557-fall2020-pa1-kenneth-fernandes/httpServerMultiThread/src"
 - The folder for storing the html, image and other resource files lies under the folder path "cs457-557-fall2020-pa1-kenneth-fernandes/httpServerMultiThread/www/".
