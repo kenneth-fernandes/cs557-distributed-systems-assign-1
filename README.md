@@ -1,4 +1,4 @@
-# CS557: Assignment 1
+# CS557: Assignment 1 - Multi-threaded HTTP Server
 
 ## Name: Kenneth Peter Fernandes
 
