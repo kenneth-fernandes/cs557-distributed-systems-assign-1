@@ -8,11 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.Inet4Address;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -133,7 +130,7 @@ public class HttpRequestProcessor implements Runnable {
 
             }
 
-            System.out.println(path + "|" + clientSocket.getLocalAddress().getHostAddress() + "|"
+            System.out.println(path + "|" + clientSocket.getInetAddress().getHostAddress() + "|"
                     + clientSocket.getPort() + "|" + fileAccesCountMap.get(path));
 
         }
