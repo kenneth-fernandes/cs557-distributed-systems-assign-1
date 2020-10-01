@@ -76,7 +76,7 @@ Description: Compiles your code and generates .class files inside the BUILD fold
 
 ## Instruction to run:
 
-#### Use the below command to run the program. Please add the port number.
+#### Use the below command to run the program.
 
 ```commandline
 - Navigate to the repository folder:
