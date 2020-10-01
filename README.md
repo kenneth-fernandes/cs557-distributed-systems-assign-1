@@ -83,7 +83,7 @@ Description: Compiles your code and generates .class files inside the BUILD fold
 cd cs457-557-fall2020-pa1-kenneth-fernandes
 
 - Then run the command:
-ant -buildfile httpServerMultiThread/src/build.xml run-server -DportNumber=8080
+ant -buildfile httpServerMultiThread/src/build.xml run-server
 ```
 ---
 
@@ -93,7 +93,7 @@ ant -buildfile httpServerMultiThread/src/build.xml run-server -DportNumber=8080
 
 ```commandline
 
-kferna11@remote06:~/Assignment/IDS/cs457-557-fall2020-pa1-kenneth-fernandes-master$ ant -buildfile httpServerMultiThread/src/build.xml run-server -DportNumber=8080
+kferna11@remote06:~/Assignment/IDS/cs457-557-fall2020-pa1-kenneth-fernandes-master$ ant -buildfile httpServerMultiThread/src/build.xml run-server
 Buildfile: /import/linux/home1/kferna11/Assignment/IDS/cs457-557-fall2020-pa1-kenneth-fernandes-master/httpServerMultiThread/src/build.xml
 
 server-jar:
